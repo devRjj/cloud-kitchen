@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CloudBite Kitchen</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff8f2;
+      color: #333;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      background: #ff6b35;
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    nav .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
+    }
+    nav ul li a:hover { opacity: 0.75; }
+    nav .cart-btn {
+      background: #fff;
+      color: #ff6b35;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #ff6b35 0%, #f7c59f 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 80px;
+      min-height: 480px;
+    }
+    .hero-text h1 {
+      font-size: 3rem;
+      color: #fff;
+      line-height: 1.2;
+      max-width: 480px;
+    }
+    .hero-text p {
+      margin: 18px 0 30px;
+      color: #fff3ec;
+      font-size: 1.1rem;
+      max-width: 420px;
+    }
+    .hero-text .order-btn {
+      background: #fff;
+      color: #ff6b35;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+    }
+    .hero-text .order-btn:hover { transform: scale(1.05); }
+    .hero img {
+      width: 380px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      object-fit: cover;
+    }
+
+    /* ── CATEGORIES ── */
+    .categories {
+      padding: 60px 80px;
+      text-align: center;
+    }
+    .categories h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: #222;
+    }
+    .categories p.sub {
+      color: #888;
+      margin-bottom: 36px;
+    }
+    .cat-grid {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .cat-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 20px;
+      width: 140px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .cat-card img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+    .cat-card span {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    /* ── MENU ── */
+    .menu {
+      background: #fff;
+      padding: 60px 80px;
+    }
+    .menu h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: #222;
+    }
+    .menu p.sub {
+      color: #888;
+      margin-bottom: 36px;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 28px;
+    }
+    .menu-card {
+      background: #fff8f2;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+    }
+    .menu-card:hover { transform: translateY(-4px); }
+    .menu-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .menu-card .info {
+      padding: 16px;
+    }
+    .menu-card .info h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+      color: #222;
+    }
+    .menu-card .info p {
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 14px;
+    }
+    .menu-card .info .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu-card .info .price {
+      font-weight: 700;
+      color: #ff6b35;
+      font-size: 1.05rem;
+    }
+    .menu-card .info .add-btn {
+      background: #ff6b35;
+      color: #fff;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .menu-card .info .add-btn:hover { background: #e0521e; }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      padding: 60px 80px;
+      text-align: center;
+      background: #fff3ec;
+    }
+    .how h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .how p.sub {
+      color: #888;
+      margin-bottom: 40px;
+    }
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .step {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px 24px;
+      width: 200px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+    .step .icon {
+      font-size: 2.4rem;
+      margin-bottom: 14px;
+    }
+    .step h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: #222;
+    }
+    .step p {
+      font-size: 0.82rem;
+      color: #888;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      padding: 60px 80px;
+      background: #fff;
+      text-align: center;
+    }
+    .testimonials h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .testimonials p.sub {
+      color: #888;
+      margin-bottom: 36px;
+    }
+    .testi-grid {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .testi-card {
+      background: #fff8f2;
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 300px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      text-align: left;
+    }
+    .testi-card .stars { color: #ff6b35; font-size: 1.1rem; margin-bottom: 10px; }
+    .testi-card p { font-size: 0.88rem; color: #555; margin-bottom: 16px; }
+    .testi-card .author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .testi-card .author img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .testi-card .author .name { font-weight: 700; font-size: 0.88rem; color: #333; }
+    .testi-card .author .role { font-size: 0.78rem; color: #aaa; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #222;
+      color: #ccc;
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    footer .brand .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ff6b35;
+    }
+    footer .brand p {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      max-width: 240px;
+    }
+    footer h4 { color: #fff; margin-bottom: 12px; font-size: 0.95rem; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 8px; font-size: 0.85rem; cursor: pointer; }
+    footer ul li:hover { color: #ff6b35; }
+    footer .bottom {
+      width: 100%;
+      text-align: center;
+      border-top: 1px solid #444;
+      padding-top: 20px;
+      font-size: 0.8rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">☁️ CloudBite</div>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Menu</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <button class="cart-btn">🛒 Cart (0)</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Fresh Meals, Delivered to Your Door 🍽️</h1>
+      <p>Handcrafted recipes made in our cloud kitchen — fast, fresh, and always delicious.</p>
+      <button class="order-btn">Order Now →</button>
+    </div>
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Delicious Food" />
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <h2>Browse Categories</h2>
+    <p class="sub">What are you craving today?</p>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200&q=80" alt="Pizza"/>
+        <span>🍕 Pizza</span>
+      </div>
+      <div class="cat-card">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=80" alt="Burgers"/>
+        <span>🍔 Burgers</span>
+      </div>
+      <div class="cat-card">
+        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=200&q=80" alt="Salads"/>
+        <span>🥗 Salads</span>
+      </div>
+      <div class="cat-card">
+        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&q=80" alt="Pasta"/>
+        <span>🍝 Pasta</span>
+      </div>
+      <div class="cat-card">
+        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=200&q=80" alt="Desserts"/>
+        <span>🍰 Desserts</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu">
+    <h2>Our Popular Dishes</h2>
+    <p class="sub">Fresh ingredients, bold flavors — every single day.</p>
+    <div class="menu-grid">
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80" alt="Margherita Pizza"/>
+        <div class="info">
+          <h3>Margherita Pizza</h3>
+          <p>Classic tomato base, fresh mozzarella & basil.</p>
+          <div class="bottom">
+            <span class="price">$12.99</span>
+            <button class="add-btn">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="Smash Burger"/>
+        <div class="info">
+          <h3>Smash Burger</h3>
+          <p>Double patty, cheddar, pickles & secret sauce.</p>
+          <div class="bottom">
+            <span class="price">$10.49</span>
+            <button class="add-btn">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&q=80" alt="Garden Salad"/>
+        <div class="info
+        <div class="info">
+          <h3>Garden Salad</h3>
+          <p>Seasonal greens, cherry tomatoes, cucumber & lemon vinaigrette.</p>
+          <div class="bottom">
+            <span class="price">$8.99</span>
+            <button class="add-btn">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&q=80" alt="Penne Arrabbiata"/>
+        <div class="info">
+          <h3>Penne Arrabbiata</h3>
+          <p>Spicy tomato sauce, garlic, chili flakes & parmesan.</p>
+          <div class="bottom">
+            <span class="price">$11.99</span>
+            <button class="add-btn">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <h2>How It Works</h2>
+    <p class="sub">Ordering fresh meals has never been easier.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="icon">📱</div>
+        <h3>Choose Your Meal</h3>
+        <p>Browse our menu or search by cuisine, dietary needs, or chef.</p>
+      </div>
+      <div class="step">
+        <div class="icon">⏱️</div>
+        <h3>We Cook It Fresh</h3>
+        <p>Our chefs prepare your order in our cloud kitchen within minutes.</p>
+      </div>
+      <div class="step">
+        <div class="icon">🚚</div>
+        <h3>Fast Delivery</h3>
+        <p>Get your meal hot and fresh — usually in under 30 minutes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <h2>What Our Customers Say</h2>
+    <p class="sub">Loved by food lovers across the city.</p>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"CloudBite saved my dinner party! The pasta was restaurant-quality and arrived piping hot."</p>
+        <div class="author">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd724a325?w=100&q=80" alt="Sarah"/>
+          <div>
+            <div class="name">Sarah K.</div>
+            <div class="role">Food Blogger</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"I order every Friday — the smash burger is my go-to. Consistently delicious!"</p>
+        <div class="author">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd724a325?w=100&q=80" alt="Mike"/>
+          <div>
+            <div class="name">Mike T.</div>
+            <div class="role">Busy Professional</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"Perfect for busy nights. The salad was fresh, flavorful, and exactly what I needed."</p>
+        <div class="author">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd724a325?w=100&q=80" alt="Lisa"/>
+          <div>
+            <div class="name">Lisa M.</div>
+            <div class="role">Fitness Enthusiast</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="brand">
+      <div class="logo">☁️ CloudBite</div>
+      <p>Delivering fresh, chef-crafted meals from our cloud kitchen to your doorstep — fast, easy, and always delicious.</p>
+    </div>
+    <div class="links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li>Home</li>
+        <li>Menu</li>
+        <li>About Us</li>
+        <li>Contact</li>
+      </ul>
+    </div>
+    <div class="links">
+      <h4>Support</h4>
+      <ul>
+        <li>FAQs</li>
+        <li>Delivery Info</li>
+        <li>Privacy Policy</li>
+        <li>Terms of Service</li>
+      </ul>
+    </div>
+    <div class="links">
+      <h4>Connect</h4>
+      <ul>
+        <li>Instagram</li>
+        <li>Twitter</li>
+        <li>Facebook</li>
+        <li>Support Email</li>
+      </ul>
+    </div>
+    <div class="bottom">
+      © 2026 CloudBite Kitchen. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>
