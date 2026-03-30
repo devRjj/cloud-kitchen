@@ -2,16 +2,16 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "q2-app"
-        CONTAINER_NAME = "c2"
-        PORT = "90"
+        IMAGE_NAME = "q3-app"
+        CONTAINER_NAME = "c3"
+        PORT = "8081"
     }
 
     stages {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/devRjj/jenkins-demo2.git'
+                git 'https://github.com/devRjj/cloud-kitchen.git'
             }
         }
 
